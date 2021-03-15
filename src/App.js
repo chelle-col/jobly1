@@ -6,6 +6,7 @@ import Jobs from './Jobs';
 import Companies from './Companies';
 import Home from './Home';
 import Profile from './Profile';
+import CompanyDetail from './CompanyDetail';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
           </Route>
           <Route exact path='/companies'>
             <Companies />
+          </Route>
+          <Route path='/companies/:handle'>
+            <CompanyDetail />
           </Route>
           <Route exact path='/profile'>
             <Profile />

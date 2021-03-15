@@ -1,7 +1,19 @@
 import React from 'react';
+import useApi from './useApi';
+import Company from './Company';
 
 const Companies = () => {
-    return <h1>I am the Companies Page</h1>
+    const [ companies, isLoading ] = useApi( 'companies' );
+    if( isLoading ){
+        return <h1>Loading ... </h1>
+    }
+    return (
+        <>
+        <ul>
+            {companies.map( ( c, idx ) => <Company key={idx} company={c} />)}
+        </ul>
+        </>
+    )
 }
 
 export default Companies;
