@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import JoblyApi from "./JoblyApi";
+import JoblyApi from "../JoblyApi";
 
 // Uses Api and returns information in a state object with loading
 const useApi = ( path, secondPath = '' ) => {

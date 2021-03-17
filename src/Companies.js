@@ -1,5 +1,5 @@
 import React from 'react';
-import useApi from './useApi';
+import useApi from './hooks/useApi';
 import Company from './Company';
 
 const Companies = () => {

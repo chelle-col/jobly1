@@ -5,16 +5,15 @@ const Job = ({ job }) => {
   const handleClick = () => {
     console.log('applied');
   }
-
-    return (
+  return (
     <div>
-        <Card>
+        <Card className='my-2'>
           <CardBody>
             <CardTitle tag="h5">{job.title}</CardTitle>
-            { job.salary !== null && <CardText>Salary: {job.salary}</CardText>}
-            <CardText>Company: {job.companyName}</CardText>
-            { job.equity !== null && <CardText>Equity: {job.equity}</CardText>}
-            <Button onClick={handleClick}>Apply</Button>
+            { job.salary != null && <CardText>Salary: {job.salary}</CardText> }
+            { job.company != null && <CardText>Company: {job.companyName}</CardText> }
+            { job.equity != null && <CardText>Equity: {job.equity}</CardText> }
+            <Button style={{background:'crimson'}} onClick={handleClick}>Apply</Button>
           </CardBody>
         </Card>
       </div>

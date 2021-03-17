@@ -8,7 +8,7 @@ const Company = ({ company }) => {
     const handleClick = () => {
         history.push(`/companies/${company.handle}`);
     }
-    console.log(company);
+
     return (
         <div>
             <Card className='Company-clickable my-3' onClick={handleClick}>
