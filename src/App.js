@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Navbar from './Navbar';
 import Jobs from './Jobs';
 import Companies from './Companies';
@@ -12,21 +12,19 @@ import useAuthApi from './hooks/useAuthApi';
 import UserContext from './UserContext';
 
 function App() {
-  const history = useHistory();
   const [ user, setUser ] = useState();
-  const [ token, setToken ] = useState();
-  const [ isLoading, getData, getUser ] = useAuthApi( 'token' );
+  const [ token, getData, getUser ] = useAuthApi( 'token' );
   
   const login = async ( username, password ) =>{
     setUser({ username: username, password: password });
-    setToken(await getData(username, password));
+    await getData(username, password);
 
-    return false;
+    return true;
   }
 
   useEffect( ()=> {
     async function checkToken() {
-      if( token !== 'unathorized' && token !== undefined){
+      if( token !== 'unathorized' && user ){
         setUser(await getUser( user.username, token ));
       }
     }
