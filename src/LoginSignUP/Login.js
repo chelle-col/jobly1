@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import UserContext from './UserContext';
+import UserContext from '../UserContext';
 
 const Login = ({ login }) => {
     const user = useContext(UserContext);

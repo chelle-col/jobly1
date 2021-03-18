@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav, NavbarBrand } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import UserContext from './UserContext';
+import UserContext from '../UserContext';
 import LoginNavbar from './LoginNavbar';
 import LogoutNavbar from './LogoutNavbar';
 

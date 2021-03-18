@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import useApi from './hooks/useApi';
+import useApi from '../hooks/useApi';
 import Job from './Job';
-import UserContext from './UserContext';
+import UserContext from '../UserContext';
 
 const Jobs = () => {
     const user = useContext(UserContext);
