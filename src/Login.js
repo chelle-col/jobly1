@@ -1,42 +1,51 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import UserContext from './UserContext';
 
-const Login = ({ func }) => {
+const Login = ({ login }) => {
+    const user = useContext(UserContext);
+
     const initUserData = {
         username: '',
         password: ''
     }
+    
     const history = useHistory();
     const [ isAuthed, setAuthed ] = useState(false);
     const [ userData, setUserData ] = useState(initUserData);
 
     const handleChange = (e) => {
-        const { name, value } = e.target
-        setUserData({
+        const { name, value } = e.target;
+        setUserData(userData => ({
             ...userData,
             [name]: value
-        })
+        }));
     }
+
+    useEffect( ()=> {
+        if(user && user.email){
+            history.push('/');
+        }
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const authed = await func( userData.username, userData.password );
-        setAuthed(authed)
-        if(isAuthed){
-            history.push('/')
-        }
+        console.log(userData);
+        await login( userData.username, userData.password );
     }
 
     return (
         <>
             {isAuthed && <h5>Username/Password is not valid, please try again</h5>}
-            <form onSubmit={async(e) => handleSubmit(e)}>
+            <form onSubmit={ async (e) => handleSubmit(e)}>
                 <input type='text' 
-                    onChange={(e) => handleChange(e)} 
+                    onChange={handleChange} 
+                    value={userData.username}
                     placeholder='username' 
                     name='username' />
                 <input type='text'
-                    onChange={(e) => handleChange(e)}
+                    onChange={handleChange}
+                    value={userData.password}
                     placeholder='password'
                     name='password' />
                 <button>Login</button>

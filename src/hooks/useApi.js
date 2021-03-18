@@ -15,7 +15,7 @@ const useApi = ( path, secondPath = '' ) => {
             setIsLoading(false);
         }
         getData();
-    }, [path])
+    }, [ path, secondPath ]);
 
     return [ data, isLoading ];
 }

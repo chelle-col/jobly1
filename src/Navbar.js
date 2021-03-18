@@ -1,21 +1,18 @@
-import React from 'react';
-import { Navbar, Nav, NavItem, NavLink, NavbarBrand } from 'reactstrap';
+import React, { useContext } from 'react';
+import { Navbar, Nav, NavbarBrand } from 'reactstrap';
+import UserContext from './UserContext';
+import LoginNavbar from './LoginNavbar';
+import LogoutNavbar from './LogoutNavbar';
 
 const NavBar = () => {
+    const user = useContext(UserContext);
     return (
       <div>
         <Navbar color='light' light expand='md'>
             <NavbarBrand href='/'>Jobly</NavbarBrand>
           <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink href='/jobs'>Jobs</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href='/companies'>Companies</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href='/profile'>Profile</NavLink>
-            </NavItem>
+            { user && <LoginNavbar />}
+            { !user && <LogoutNavbar />}
           </Nav>  
         </Navbar>
         </div>
