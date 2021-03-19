@@ -1,29 +1,38 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Navbar from './Navbar';
-import Jobs from './Jobs';
-import Companies from './Companies';
+import Navbar from './Navbar/Navbar';
+import Jobs from './Job/Jobs';
+import Companies from './Company/Companies';
 import Home from './Home';
 import Profile from './Profile';
-import CompanyDetail from './CompanyDetail';
-import Login from './Login';
+import CompanyDetail from './Company/CompanyDetail';
+import Login from './LoginSignUP/Login';
 import useAuthApi from './hooks/useAuthApi';
 import UserContext from './UserContext';
+import Signup from './LoginSignUP/Signup';
 
 function App() {
   const [ user, setUser ] = useState();
-  const [ token, getData, getUser ] = useAuthApi( 'token' );
+  const [ token, getToken, getUser ] = useAuthApi();
   
-  const login = async ( username, password ) =>{
-    setUser({ username: username, password: password });
-    await getData(username, password);
+  const login = async ( user ) =>{
+    console.log('inside login', user);
+    setUser({ username: user.username, password: user.password });
+    await getToken( user, 'token' );
 
     return true;
   }
 
+  const signup = async ( user ) => {
+    const username = user.username;
+    setUser( { username  } );
+    await getToken( user, 'register' );
+  }
+
   useEffect( ()=> {
     async function checkToken() {
+      console.log('inside checktoken', token, user);
       if( token !== 'unathorized' && user ){
         setUser(await getUser( user.username, token ));
       }
@@ -42,6 +51,9 @@ function App() {
             </Route>
             <Route exact path='/login'>
               <Login login={login} />
+            </Route>
+            <Route exact path='/signup'>
+              <Signup signup={signup}/>
             </Route>
             <Route exact path='/jobs'>
               <Jobs />

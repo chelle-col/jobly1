@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useApi from './hooks/useApi';
-import Job from './Job';
+import useApi from '../hooks/useApi';
+import Job from '../Job/Job';
 import { Card, CardTitle, CardText, CardBody } from 'reactstrap';
 
 const ComapanyDetail = () => {

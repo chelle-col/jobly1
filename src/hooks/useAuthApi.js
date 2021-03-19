@@ -4,12 +4,14 @@ import JoblyApi from "../JoblyApi";
 // Uses Api and returns information in a state object with loading
 // Auth needs to do register, login 
 //   the component will place token in local state
-const useAuthApi = ( path ) => {
+const useAuthApi = () => {
     const [ token, setToken ] = useState('unauthorized');
 
-    async function getData( username, password ) {
+    async function getToken( user, path ) {
+        console.log( 'inside getToken', user, path );
         try{
-            let result = await JoblyApi.loginOnPath( path, username, password );
+            let result = await JoblyApi.loginOnPath( path, user );
+            console.log(result);
             setToken(result);
         }catch{
             setToken('unauthorized');
@@ -20,7 +22,7 @@ const useAuthApi = ( path ) => {
         return JoblyApi.getUser( username, token );
     }
 
-    return [ token, getData, getUser ];
+    return [ token, getToken, getUser ];
 }
 
 export default useAuthApi;
