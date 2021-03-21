@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
 import Jobs from './Job/Jobs';
@@ -13,32 +13,7 @@ import UserContext from './UserContext';
 import Signup from './LoginSignUP/Signup';
 
 function App() {
-  const [ user, setUser ] = useState();
-  const [ token, getToken, getUser ] = useAuthApi();
-  
-  const login = async ( user ) =>{
-    console.log('inside login', user);
-    setUser({ username: user.username, password: user.password });
-    await getToken( user, 'token' );
-
-    return true;
-  }
-
-  const signup = async ( user ) => {
-    const username = user.username;
-    setUser( { username  } );
-    await getToken( user, 'register' );
-  }
-
-  useEffect( ()=> {
-    async function checkToken() {
-      console.log('inside checktoken', token, user);
-      if( token !== 'unathorized' && user ){
-        setUser(await getUser( user.username, token ));
-      }
-    }
-    checkToken();
-  }, [token])
+  const [ user, errors, login, signup ] = useAuthApi(); 
 
   return (
     <div className="App">
@@ -50,10 +25,10 @@ function App() {
               <Home />
             </Route>
             <Route exact path='/login'>
-              <Login login={login} />
+              <Login login={login} errors={errors}/>
             </Route>
             <Route exact path='/signup'>
-              <Signup signup={signup}/>
+              <Signup signup={signup} errors={errors}/>
             </Route>
             <Route exact path='/jobs'>
               <Jobs />

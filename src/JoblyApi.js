@@ -15,7 +15,6 @@ class JoblyApi {
     
     // Post from path for login
     static async loginOnPath( path, user ){
-      console.log('inside loginOnPath', 'Path', path, 'User', user, typeof user );
       const result = await axios.post(
         `${BASE_API_URL}/auth/${path}`, 
         user);

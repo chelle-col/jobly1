@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form } from 'reactstrap';
 import UserContext from '../UserContext';
 import InputGroup from './InputGroup';
 
@@ -28,7 +28,7 @@ const Login = ({ login }) => {
         if(user && user.email){
             history.push('/');
         }
-    }, [user]);
+    }, [ user, history ]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
