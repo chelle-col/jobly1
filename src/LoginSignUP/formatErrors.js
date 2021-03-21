@@ -1,5 +1,5 @@
 
-
+// Formats the raw error messages from api into more user friendly ones
 function formatError ( errorMessage ) {
     if( !errorMessage ){
         return;

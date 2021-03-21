@@ -5,6 +5,8 @@ import UserContext from '../UserContext';
 import InputGroup from './InputGroup';
 import formatError from './formatErrors';
 
+
+// The sign up page
 const Signup = ({ signup, errors }) => {
     const initUserData = {
         username: '',
@@ -17,10 +19,9 @@ const Signup = ({ signup, errors }) => {
     const history = useHistory();
     const user = useContext(UserContext);
     const [ formErrors, setFormErrors ] = useState([]);
-
     const [ userData, setUserData ] = useState(initUserData);
-    const errorMessage = 'This field cannot be empty.';
 
+    // Handles when an input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUserData(userData => ({
@@ -29,8 +30,11 @@ const Signup = ({ signup, errors }) => {
         }));
     };
 
+    // Handles submit action
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const errorMessage = 'This field cannot be empty.';
+        // Check for empty input format it into error message
         const empty = Object.entries(userData).map( u => {
             if(u[1] === ''){
                 return {
@@ -40,8 +44,9 @@ const Signup = ({ signup, errors }) => {
             }
             return undefined;
         }).filter( e => e !== undefined );
+
         setFormErrors(empty);
-        
+        // If there are no empty inputs sign up user
         if( empty.length === 0){
             await signup( userData );
         }
@@ -59,7 +64,6 @@ const Signup = ({ signup, errors }) => {
         // If useAuthApi has errors the errors change
         // Errors get put in erros
         const formatedErrors = errors.map( e => formatError(e));
-        console.log(formatedErrors);
         setFormErrors( formatedErrors );
     }, [ errors ]) ;
 

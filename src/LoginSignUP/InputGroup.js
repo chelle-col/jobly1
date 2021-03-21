@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormGroup, Label, Input } from 'reactstrap';
 import capitalize from './capitalize';
-
+// Input group for forms
 const InputGroup = ({ name, type, errors, handleChange, userData }) => {
     const error = errors.filter( e => e.name === name);
     
