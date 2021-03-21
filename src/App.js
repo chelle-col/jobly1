@@ -13,13 +13,13 @@ import UserContext from './UserContext';
 import Signup from './LoginSignUP/Signup';
 
 function App() {
-  const [ user, errors, login, signup ] = useAuthApi(); 
+  const [ user, errors, login, signup, signout ] = useAuthApi(); 
 
   return (
     <div className="App">
       <BrowserRouter>
         <UserContext.Provider value={user}>
-        <Navbar />
+        <Navbar signout={signout} />
           <Switch>
             <Route exact path='/'>
               <Home />

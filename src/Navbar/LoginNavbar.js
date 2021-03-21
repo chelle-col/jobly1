@@ -2,7 +2,10 @@ import React from 'react';
 import { NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-const LoginNavbar = () => {
+const LoginNavbar = ({ signout }) => {
+  const handleCLick = () => {
+    signout();
+  }
     return (
         <>
             <NavItem>
@@ -13,6 +16,9 @@ const LoginNavbar = () => {
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to='/profile'>Profile</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to='#' onClick={handleCLick} >Logout</NavLink>
             </NavItem>
         </>
     )

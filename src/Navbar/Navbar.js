@@ -5,14 +5,14 @@ import UserContext from '../UserContext';
 import LoginNavbar from './LoginNavbar';
 import LogoutNavbar from './LogoutNavbar';
 
-const NavBar = () => {
+const NavBar = ({ signout }) => {
     const user = useContext(UserContext);
     return (
       <div>
         <Navbar color='light' light expand='md'>
             <NavbarBrand tag={Link} to='/'>Jobly</NavbarBrand>
           <Nav className="ml-auto" navbar>
-            { user && <LoginNavbar />}
+            { user && <LoginNavbar signout={signout} />}
             { !user && <LogoutNavbar />}
           </Nav>  
         </Navbar>

@@ -6,16 +6,16 @@ import InputGroup from './InputGroup';
 
 // The login page
 const Login = ({ login }) => {
-    const user = useContext(UserContext);
+    const user = useContext(UserContext);                      // User
 
     const initUserData = {
         username: '',
         password: ''
     }
 
-    const history = useHistory();
-    const [ isAuthed, setAuthed ] = useState(false);
-    const [ userData, setUserData ] = useState(initUserData);
+    const history = useHistory();                              // Used to redirect to homepage
+    const [ isAuthed, setAuthed ] = useState(false);           // Used to tell if user is authenticated
+    const [ userData, setUserData ] = useState(initUserData);  // Holds all form data
 
     // Handles the input changes
     const handleChange = (e) => {
@@ -26,19 +26,19 @@ const Login = ({ login }) => {
         }));
     }
 
-    // When the user is successfully logged in will return to home page
-    useEffect( ()=> {
-        if(user && user.email){
-            history.push('/');
-        }
-    }, [ user, history ]);
-
     // Handle the submit action
     const handleSubmit = async (e) => {
         e.preventDefault();
         setAuthed(await login( userData ));
     };
 
+    // When the user is successfully logged in will return to home page
+    useEffect( ()=> {
+        if(user && user.email){
+            history.push('/');
+        }
+    }, [ user, history ]);
+    
     return (
         <>
             {isAuthed && <h5 className='text-danger'>Username/Password is not valid, please try again</h5>}

@@ -1,22 +1,26 @@
 import { useState, useEffect } from 'react';
 import JoblyApi from "../JoblyApi";
+import useLocalStorage from './useLocalStorage';
 
 // Uses Api and returns information in a state object with loading
 // Auth does register, login, token and user
-// Returns [ user, errors, signup, login ]
+// Returns [ user, errors, signup, login, logout ]
 const useAuthApi = () => {
-    const UNATHORIZED = 'unathorized';
-    const [ token, setToken ] = useState(UNATHORIZED);
-    const [ user, setUser ] = useState();
-    const [ errors, setErrors ] = useState([]);
+    const UNAUTHORIZED = 'unauthorized';                // the Unauth token
+    const [ token, setToken ] = useState(UNAUTHORIZED); // initalize token to unauth
+    const [ user, setUser ] = useState();               // holds the user
+    const [ errors, setErrors ] = useState([]);         // holds any errors from db
+    const [ getLocalToken, setLocalToken, removeLocalToken ] = useLocalStorage();
+                                                        // local storage
 
     // Gets the token from a given user and path
     async function getToken( user, path ) {
         try{
             let result = await JoblyApi.loginOnPath( path, user );
             setToken(result);
+            setLocalToken( user.username, result );
         }catch (e) {
-            setToken(UNATHORIZED);
+            setToken(UNAUTHORIZED);
             setErrors(e.response.data.error.message);
         }
     };
@@ -34,17 +38,33 @@ const useAuthApi = () => {
         await getToken( user, 'register' );
     };
 
+    // Signs user out of app
+    const signout = () => {
+        setUser(undefined);
+        setToken(UNAUTHORIZED);
+        removeLocalToken();
+    };
+
     // If token changes, get user from api
+    // **DO NOT ADD USER TO DEPENDANCIES**
     useEffect( ()=> {
         async function checkToken() {
-          if( token !== UNATHORIZED && user ){
+          if( token !== UNAUTHORIZED && user ){
             setUser(await JoblyApi.getUser( user.username, token ));
           }
         }
         checkToken();
     }, [ token ]);
 
-    return [ user, errors, login, signup ];
+    // Check for token on load
+    useEffect( ()=>{
+        console.log('getting token');
+        const localToken = getLocalToken( UNAUTHORIZED );
+        console.log(localToken)
+        setToken(localToken);
+    }, []);
+
+    return [ user, errors, login, signup, signout ];
 }
 
 export default useAuthApi;
