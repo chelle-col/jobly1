@@ -71,26 +71,36 @@ const Signup = ({ signup, errors }) => {
         <Form className='m-5 p-3 border border-secondary' onSubmit={ async (e) => handleSubmit(e)}>
                 <h1>Signup</h1>
                 <InputGroup name={'username'}
+                    placeholder={'Username'}
+                    label={'Username'}
                     type={'text'}
                     errors={formErrors}
                     handleChange={handleChange}
                     userData={userData.username}/>
                 <InputGroup name={'password'}
+                    placeholder={'Password'}
+                    label={'Password'}
                     type={'password'}
                     errors={formErrors}
                     handleChange={handleChange}
                     userData={userData.password}/>
                 <InputGroup name={'firstName'}
+                    placeholder={'First Name'}
+                    label={'First Name'}
                     type={'text'}
                     errors={formErrors}
                     handleChange={handleChange}
                     userData={userData.firstName}/>
                 <InputGroup name={'lastName'}
+                    placeholder={'Last Name'}
+                    label={'Last Name'}
                     type={'text'}
                     errors={formErrors}
                     handleChange={handleChange}
                     userData={userData.lastName}/>
                 <InputGroup name={'email'}
+                    placeholder={'Email'}
+                    label={'Email'}
                     type={'email'}
                     errors={formErrors}
                     handleChange={handleChange}

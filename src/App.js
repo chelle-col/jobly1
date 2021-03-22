@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
 import Jobs from './Job/Jobs';
 import Companies from './Company/Companies';
@@ -13,8 +13,8 @@ import UserContext from './UserContext';
 import Signup from './LoginSignUP/Signup';
 
 function App() {
-  const [ user, errors, login, signup, signout ] = useAuthApi(); 
-
+  const [ user, errors, login, signup, signout, updateUser ] = useAuthApi(); 
+  
   return (
     <div className="App">
       <BrowserRouter>
@@ -31,16 +31,16 @@ function App() {
               <Signup signup={signup} errors={errors}/>
             </Route>
             <Route exact path='/jobs'>
-              <Jobs />
+              { user ? <Jobs /> : <Redirect to='/' />}
             </Route>
             <Route exact path='/companies'>
-              <Companies />
+              { user ? <Companies /> : <Redirect to='/' />}
             </Route>
             <Route path='/companies/:handle'>
-              <CompanyDetail />
+              { user ? <CompanyDetail /> : <Redirect to='/' />}
             </Route>
             <Route exact path='/profile'>
-              <Profile />
+              { user ? <Profile updateUser={updateUser} /> : <Redirect to='/' />}
             </Route>
           </Switch>  
           </UserContext.Provider>

@@ -30,6 +30,17 @@ class JoblyApi {
         }});
       return result.data.user;
     }
+
+    static async patchUser( user, token ){
+      let newUser = {...user};
+      delete newUser.username;
+      const result = await axios.patch(`${BASE_API_URL}/users/${user.username}`, 
+      newUser,
+      {headers: {
+        'authorization': token
+      }});
+      return result.data.user;
+    }
   }
   
   export default JoblyApi;

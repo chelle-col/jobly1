@@ -45,11 +45,15 @@ const Login = ({ login }) => {
             <Form className='m-5 p-3 border border-secondary' onSubmit={ async (e) => handleSubmit(e)}>
                 <h1>Login</h1>
                 <InputGroup name={'username'}
+                    placeholder={'Username'}
+                    label={'Username'}
                     type={'text'}
                     errors={[]}
                     handleChange={handleChange}
                     userData={userData.username}/>
                 <InputGroup name={'password'}
+                    placeholder={'Password'}
+                    label={'Password'}
                     type={'password'}
                     errors={[]}
                     handleChange={handleChange}

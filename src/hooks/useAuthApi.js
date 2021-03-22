@@ -13,7 +13,7 @@ const useAuthApi = () => {
     const [ getLocalToken, setLocalToken, getLocalUser, removeLocalToken ] = useLocalStorage();
                                                         // local storage
 
-    // Gets the token from a given user and path
+    // Gets and sets the token from a given user and path
     async function getToken( user, path ) {
         try{
             let result = await JoblyApi.loginOnPath( path, user );
@@ -45,6 +45,12 @@ const useAuthApi = () => {
         removeLocalToken();
     };
 
+    // Updates user
+    const updateUser = async ( newUser ) =>{
+        console.log( newUser, token );
+        setUser( await JoblyApi.patchUser( newUser, token ).catch( e => console.log(e.response)));
+    }
+
     // If token changes, get user from api
     // **DO NOT ADD USER TO DEPENDANCIES**
     useEffect( ()=> {
@@ -52,7 +58,7 @@ const useAuthApi = () => {
             if( token !== UNAUTHORIZED && user ){
                 setUser(await JoblyApi.getUser( user.username, token ));
             }else if( token !== UNAUTHORIZED ){
-                setUser({ username: getLocalUser() });
+                setUser(await JoblyApi.getUser( getLocalUser(), token ));
             }
         }
         checkToken();
@@ -63,7 +69,7 @@ const useAuthApi = () => {
         setToken(getLocalToken( UNAUTHORIZED ));
     }, []);
 
-    return [ user, errors, login, signup, signout ];
+    return [ user, errors, login, signup, signout, updateUser ];
 }
 
 export default useAuthApi;
