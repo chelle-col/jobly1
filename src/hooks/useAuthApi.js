@@ -10,7 +10,7 @@ const useAuthApi = () => {
     const [ token, setToken ] = useState(UNAUTHORIZED); // initalize token to unauth
     const [ user, setUser ] = useState();               // holds the user
     const [ errors, setErrors ] = useState([]);         // holds any errors from db
-    const [ getLocalToken, setLocalToken, removeLocalToken ] = useLocalStorage();
+    const [ getLocalToken, setLocalToken, getLocalUser, removeLocalToken ] = useLocalStorage();
                                                         // local storage
 
     // Gets the token from a given user and path
@@ -49,19 +49,18 @@ const useAuthApi = () => {
     // **DO NOT ADD USER TO DEPENDANCIES**
     useEffect( ()=> {
         async function checkToken() {
-          if( token !== UNAUTHORIZED && user ){
-            setUser(await JoblyApi.getUser( user.username, token ));
-          }
+            if( token !== UNAUTHORIZED && user ){
+                setUser(await JoblyApi.getUser( user.username, token ));
+            }else if( token !== UNAUTHORIZED ){
+                setUser({ username: getLocalUser() });
+            }
         }
         checkToken();
     }, [ token ]);
 
     // Check for token on load
     useEffect( ()=>{
-        console.log('getting token');
-        const localToken = getLocalToken( UNAUTHORIZED );
-        console.log(localToken)
-        setToken(localToken);
+        setToken(getLocalToken( UNAUTHORIZED ));
     }, []);
 
     return [ user, errors, login, signup, signout ];
